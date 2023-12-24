@@ -76,30 +76,30 @@ poco = SmartPhone("Poco",25000,22000,3.8,12,"120 GB","300 GB")
 bread = GroceryItems("Bread",50,40,3.9,"03-12-23")
 laptop = SmartPhone("Laptop",45000,43499,4.5,12,"64GB","128GB")
 
-list_of_items = ["tv","poco","bread","laptop"]
-user_input = input("Enter Items Names: ")
+# User input loop
+myorders = Order()
+while True:
+    user_input = input("Enter Product Name (or type 'done' to finish): ").lower()
+    if user_input == 'done':
+        break
+    if user_input in [tv.name.lower(), poco.name.lower(), bread.name.lower(), laptop.name.lower()]:
+        quantity = int(input("Enter quantity for {}: ".format(user_input)))
+        product = None
+        if user_input == tv.name.lower():
+            product = tv
+        elif user_input == poco.name.lower():
+            product = poco
+        elif user_input == bread.name.lower():
+            product = bread
+        elif user_input == laptop.name.lower():
+            product = laptop
+        myorders.add_items(product, quantity)
+    else:
+        print("Sorry, {} is not available.".format(user_input))
 
-if user_input in list_of_items:
-    quantity = int(input("Enter quantity: "))
-    print("")
-    for each_item in list_of_items:
-        if user_input == "tv":
-            myorders = Order()
-            myorders.add_items(tv,quantity)
-            myorders.display_order_details()
-            myorders.display_total_bill()
-            break
-        if user_input == "poco":
-            myorders = Order()
-            myorders.add_items(poco, quantity)
-            myorders.display_order_details()
-            myorders.display_total_bill()
-            break
-        if user_input == "laptop":
-            myorders = Order()
-            myorders.add_items(laptop, quantity)
-            myorders.display_order_details()
-            myorders.display_total_bill()
-            break
-else :
-    print("Sorry the item is not available")
+# Display order details and total bill
+if myorders.items_in_cart:
+    myorders.display_order_details()
+    myorders.display_total_bill()
+else:
+    print("No items in the cart. Goodbye!")
